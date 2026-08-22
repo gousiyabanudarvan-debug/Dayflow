@@ -11,7 +11,9 @@
 
 <style>
 
-
+/* =========================================================
+   GLOBAL
+========================================================= */
 
 * {
     margin: 0;
@@ -37,7 +39,9 @@ button {
 }
 
 
-
+/* =========================================================
+   LOGIN
+========================================================= */
 
 .login-page {
     min-height: 100vh;
@@ -67,7 +71,7 @@ button {
 }
 
 
-
+/* LEFT COMPANY PANEL */
 
 .company-panel {
     background:
@@ -104,7 +108,7 @@ button {
 }
 
 
-
+/* LOGIN PANEL */
 
 .login-box {
     padding: 45px;
@@ -210,7 +214,9 @@ button {
 }
 
 
-
+/* =========================================================
+   APPLICATION
+========================================================= */
 
 .app {
     display: none;
@@ -218,7 +224,9 @@ button {
 }
 
 
-
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar {
     position: fixed;
@@ -275,7 +283,9 @@ button {
 }
 
 
-
+/* =========================================================
+   MAIN
+========================================================= */
 
 .main {
     margin-left: 245px;
@@ -360,7 +370,9 @@ button {
 }
 
 
-
+/* =========================================================
+   CARDS
+========================================================= */
 
 .cards {
     display: grid;
@@ -410,7 +422,9 @@ button {
 }
 
 
-
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
 
 .quick-grid {
     display: grid;
@@ -446,7 +460,9 @@ button {
 }
 
 
-
+/* =========================================================
+   SECTION
+========================================================= */
 
 .section {
     background: white;
@@ -505,7 +521,9 @@ button {
 }
 
 
-
+/* =========================================================
+   TABLE
+========================================================= */
 
 .table-wrapper {
     overflow-x: auto;
@@ -556,7 +574,9 @@ td {
 }
 
 
-
+/* =========================================================
+   ATTENDANCE
+========================================================= */
 
 .attendance-box {
     display: grid;
@@ -582,7 +602,9 @@ td {
 }
 
 
-
+/* =========================================================
+   ATTENDANCE GRAPH
+========================================================= */
 
 .graph-container {
     width: 100%;
@@ -597,7 +619,9 @@ canvas {
 }
 
 
-
+/* =========================================================
+   PROFILE
+========================================================= */
 
 .profile-grid {
     display: grid;
@@ -667,7 +691,9 @@ canvas {
 }
 
 
-
+/* =========================================================
+   DOCUMENTS
+========================================================= */
 
 .upload-area {
     border: 2px dashed #cfc7f7;
@@ -766,7 +792,9 @@ canvas {
 }
 
 
-
+/* =========================================================
+   HR COPILOT
+========================================================= */
 
 .copilot-layout {
     display: grid;
@@ -879,7 +907,9 @@ canvas {
 }
 
 
-
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal {
     display: none;
@@ -912,7 +942,9 @@ canvas {
 }
 
 
-
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast {
     position: fixed;
@@ -928,7 +960,9 @@ canvas {
 }
 
 
-
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:1050px) {
 
@@ -1006,7 +1040,9 @@ canvas {
 
 
 
-
+/* =========================================================
+   PAYROLL
+========================================================= */
 .payroll-summary {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1085,18 +1121,20 @@ canvas {
 <body>
 
 
-
+<!-- =========================================================
+     LOGIN PAGE
+========================================================= -->
 
 <div class="login-page" id="loginPage">
 
     <div class="login-container">
 
 
-        
+        <!-- COMPANY SIDE -->
 
         <div class="company-panel">
 
-            
+            <!-- Company image can be replaced with your own image -->
 
             <img
                 class="company-image"
@@ -1118,7 +1156,7 @@ canvas {
         </div>
 
 
-        
+        <!-- LOGIN SIDE -->
 
         <div class="login-box">
 
@@ -1141,7 +1179,7 @@ canvas {
             </div>
 
 
-            
+            <!-- LOGIN -->
 
             <div id="loginForm">
 
@@ -1226,7 +1264,7 @@ canvas {
             </div>
 
 
-            
+            <!-- SIGN UP -->
 
             <div
                 id="signupForm"
@@ -1365,12 +1403,14 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
 
 <div class="app" id="app">
 
 
-
+<!-- SIDEBAR -->
 
 <aside class="sidebar">
 
@@ -1504,7 +1544,7 @@ canvas {
 </aside>
 
 
-
+<!-- MAIN -->
 
 <main class="main">
 
@@ -1546,7 +1586,9 @@ canvas {
     <div class="content">
 
 
-
+<!-- =========================================================
+     DASHBOARD
+========================================================= -->
 
 <div id="dashboard" class="page">
 
@@ -1844,7 +1886,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     PROFILE
+========================================================= -->
 
 <div
     id="profile"
@@ -2101,7 +2145,9 @@ canvas {
 
 
 
-
+<!-- =========================================================
+     SALARY UPDATE MODAL
+========================================================= -->
 <div class="modal" id="salaryModal" style="display:none">
     <div class="modal-box">
         <div class="modal-header">
@@ -2122,7 +2168,9 @@ canvas {
     </div>
 </div>
 
-
+<!-- =========================================================
+     ATTENDANCE PAGE
+========================================================= -->
 
 <div
     id="attendance"
@@ -2277,7 +2325,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     LEAVE
+========================================================= -->
 
 <div
     id="leave"
@@ -2342,7 +2392,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     PAYROLL
+========================================================= -->
 
 <div id="payroll" class="page" style="display:none">
 
@@ -2423,7 +2475,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     DOCUMENTS
+========================================================= -->
 
 <div
     id="documents"
@@ -2493,7 +2547,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     HR COPILOT
+========================================================= -->
 
 <div
     id="copilot"
@@ -2633,7 +2689,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     ADMIN EMPLOYEES
+========================================================= -->
 
 <div
     id="employees"
@@ -2760,7 +2818,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     APPROVALS
+========================================================= -->
 
 <div
     id="approvals"
@@ -2821,7 +2881,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     REPORTS
+========================================================= -->
 
 <div
     id="reports"
@@ -2930,7 +2992,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     JOB DETAILS MODAL
+========================================================= -->
 
 <div
     class="modal"
@@ -2998,7 +3062,9 @@ canvas {
 </div>
 
 
-
+<!-- =========================================================
+     LEAVE MODAL
+========================================================= -->
 
 <div
     class="modal"
@@ -3105,7 +3171,7 @@ canvas {
 </div>
 
 
-
+<!-- TOAST -->
 
 <div
     class="toast"
@@ -3116,17 +3182,14 @@ canvas {
 
 <script>
 
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
 
-
-let users = [];
-
-try {
-    const savedUsers = JSON.parse(localStorage.getItem("dayflowUsers") || "[]");
-    users = Array.isArray(savedUsers) ? savedUsers : [];
-} catch (error) {
-    users = [];
-    localStorage.removeItem("dayflowUsers");
-}
+let users =
+    JSON.parse(
+        localStorage.getItem("dayflowUsers")
+    ) || [];
 
 let leaveRequests =
     JSON.parse(
@@ -3150,7 +3213,9 @@ let currentRole = null;
 let attendanceTimer = null;
 
 
-
+/* =========================================================
+   USER DATA DEFAULTS
+========================================================= */
 
 users = users.map(
     user => ({
@@ -3167,7 +3232,9 @@ localStorage.setItem(
 );
 
 
-
+/* =========================================================
+   UTILITY
+========================================================= */
 
 function showToast(message) {
 
@@ -3187,7 +3254,9 @@ function showToast(message) {
 }
 
 
-
+/* =========================================================
+   SIGN UP / LOGIN
+========================================================= */
 
 function showSignup() {
 
@@ -3503,7 +3572,9 @@ function login() {
 }
 
 
-
+/* =========================================================
+   PROFILE PHOTO
+========================================================= */
 
 function updateAvatarUI() {
 
@@ -3701,415 +3772,4 @@ function openJobDetailsModal() {
 
     document.getElementById(
         "jobDetailsModal"
-    ).style.display = "flex";
-
-}
-
-
-function closeJobDetailsModal() {
-
-    document.getElementById(
-        "jobDetailsModal"
-    ).style.display = "none";
-
-}
-
-
-function saveJobDetails() {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    const department =
-        document.getElementById(
-            "jobDepartment"
-        ).value.trim();
-
-
-    const designation =
-        document.getElementById(
-            "jobDesignation"
-        ).value.trim();
-
-
-    currentUser.department =
-        department || "Not Assigned";
-
-
-    currentUser.designation =
-        designation || "Not Assigned";
-
-
-    saveCurrentUser();
-
-    updateProfileUI();
-
-    closeJobDetailsModal();
-
-
-    showToast(
-        "Job details updated successfully."
-    );
-
-}
-
-
-function toggleAccountStatus() {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    const currentStatus =
-        currentUser.status || "Active";
-
-
-    currentUser.status =
-        currentStatus === "Active"
-        ? "Inactive"
-        : "Active";
-
-
-    saveCurrentUser();
-
-    updateProfileUI();
-
-
-    if (currentRole === "admin") {
-        loadEmployees();
-    }
-
-
-    showToast(
-        currentUser.status === "Active"
-        ? "Account activated successfully."
-        : "Account deactivated successfully."
-    );
-
-}
-
-
-function uploadProfilePhoto(event) {
-
-    const file =
-        event.target.files[0];
-
-
-    if (!file) {
-        return;
-    }
-
-
-    if (
-        !file.type.startsWith("image/")
-    ) {
-
-        showToast(
-            "Please select an image file."
-        );
-
-        return;
-    }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        function(e) {
-
-            currentUser.photo =
-                e.target.result;
-
-
-            const index =
-                users.findIndex(
-                    u =>
-                        u.employeeId
-                        ===
-                        currentUser.employeeId
-                );
-
-
-            if (index !== -1) {
-
-                users[index] =
-                    currentUser;
-
-            }
-
-
-            localStorage.setItem(
-                "dayflowUsers",
-                JSON.stringify(users)
-            );
-
-
-            updateProfileUI();
-
-            updateAvatarUI();
-
-
-            showToast(
-                "Profile photo updated."
-            );
-
-        };
-
-
-    reader.readAsDataURL(file);
-
-}
-
-
-
-
-function showPage(pageId, element) {
-
-    document
-        .querySelectorAll(".page")
-        .forEach(
-            page =>
-                page.style.display = "none"
-        );
-
-
-    const page =
-        document.getElementById(pageId);
-
-
-    if (page) {
-
-        page.style.display = "block";
-
-    }
-
-
-    if (element) {
-
-        document
-            .querySelectorAll(".nav-item")
-            .forEach(
-                item =>
-                    item.classList
-                        .remove("active")
-            );
-
-
-        element.classList.add("active");
-
-    }
-
-
-    if (pageId === "attendance") {
-
-        setTimeout(
-            drawAttendanceGraphs,
-            100
-        );
-
-    }
-
-    if (pageId === "payroll") {
-
-        updatePayrollUI();
-
-    }
-
-
-    if (pageId === "documents") {
-
-        loadDocuments();
-
-    }
-
-
-    if (pageId === "employees") {
-
-        loadEmployees();
-
-    }
-
-
-    if (pageId === "approvals") {
-
-        loadApprovals();
-
-    }
-
-
-    if (pageId === "reports") {
-
-        updateReports();
-
-    }
-
-}
-
-
-
-
-function getTodayKey() {
-
-    const date =
-        new Date();
-
-    return date.toISOString()
-        .split("T")[0];
-
-}
-
-
-function getUserAttendance() {
-
-    if (
-        !currentUser
-    ) {
-        return {};
-    }
-
-
-    if (
-        !attendanceData[
-            currentUser.employeeId
-        ]
-    ) {
-
-        attendanceData[
-            currentUser.employeeId
-        ] = {};
-
-    }
-
-
-    return attendanceData[
-        currentUser.employeeId
-    ];
-
-}
-
-
-function saveAttendance() {
-
-    localStorage.setItem(
-        "dayflowAttendance",
-        JSON.stringify(
-            attendanceData
-        )
-    );
-
-}
-
-
-
-
-function checkInOut() {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    const data =
-        getUserAttendance();
-
-    const today =
-        getTodayKey();
-
-
-    if (!data[today]) {
-
-        data[today] = {
-
-            checkIn: null,
-
-            checkOut: null
-
-        };
-
-    }
-
-
-    if (
-        !data[today].checkIn
-    ) {
-
-        data[today].checkIn =
-            Date.now();
-
-
-        saveAttendance();
-
-
-        showToast(
-            "Check-in recorded successfully."
-        );
-
-    }
-
-    else if (
-        !data[today].checkOut
-    ) {
-
-        data[today].checkOut =
-            Date.now();
-
-
-        saveAttendance();
-
-
-        showToast(
-            "Check-out recorded successfully."
-        );
-
-    }
-
-    else {
-
-        showToast(
-            "Today's attendance is already completed."
-        );
-
-    }
-
-
-    updateAttendanceUI();
-
-    drawAttendanceGraphs();
-
-}
-
-
-
-
-function formatTime(timestamp) {
-
-    if (!timestamp) {
-        return "--";
-    }
-
-
-    return new Date(
-        timestamp
-    ).toLocaleTimeString(
-        [],
-        {
-            hour: "2-digit",
-            minute: "2-digit"
-        }
-    );
-
-}
-
-
-function calculateHours(record) {
-
-    if (
-        !record ||
-        !record.checkIn
-
-funct
+    ).style.display = "flex
