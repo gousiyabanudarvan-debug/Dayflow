@@ -4111,4 +4111,937 @@ function calculateHours(record) {
     if (
         !record ||
         !record.checkIn
+
+function formatINR(amount) {
+    return "₹" + Number(amount || 0).toLocaleString("en-IN", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+}
+
+function updatePayrollUI() {
+    if (!currentUser) return;
+
+    const monthly = Number(currentUser.salary || 0);
+    const basic = monthly * 0.50;
+    const hra = monthly * 0.20;
+    const otherAllowance = monthly - basic - hra;
+    const deductions = basic * 0.12;
+    const netSalary = Math.max(monthly - deductions, 0);
+
+    const values = {
+        payrollMonthlySalary: monthly,
+        payrollBasicSalary: basic,
+        payrollAllowances: hra + otherAllowance,
+        payrollNetSalary: netSalary,
+        salaryBasic: basic,
+        salaryHRA: hra,
+        salaryOtherAllowance: otherAllowance,
+        salaryGross: monthly,
+        salaryDeductions: deductions,
+        salaryNetPay: netSalary
+    };
+
+    Object.keys(values).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.innerText = formatINR(values[id]);
+    });
+
+    const status = document.getElementById("payrollStatus");
+    if (status) {
+        status.innerText = monthly > 0 ? "Salary Assigned" : "Salary Not Assigned";
+        status.className = monthly > 0 ? "green" : "orange";
+    }
+}
+
+/* =========================================================
+   HR SALARY MANAGEMENT
+
+let salaryEditingEmployeeId = null;
+
+function openSalaryModal(employeeId) {
+    if (currentRole !== "admin") {
+        showToast("Only HR / Admin can update employee salary.");
+        return;
+    }
+
+    const employee = users.find(user =>
+        String(user.employeeId) === String(employeeId)
+    );
+
+    if (!employee) return;
+
+    salaryEditingEmployeeId = employee.employeeId;
+
+    document.getElementById("salaryEmployeeName").innerText =
+        employee.name + " (" + employee.employeeId + ")";
+
+    document.getElementById("employeeSalaryInput").value =
+        Number(employee.salary || 0);
+
+    document.getElementById("salaryModal").style.display = "flex";
+}
+
+function closeSalaryModal() {
+    const modal = document.getElementById("salaryModal");
+    if (modal) modal.style.display = "none";
+    salaryEditingEmployeeId = null;
+}
+
+function saveEmployeeSalary() {
+    if (currentRole !== "admin" || !salaryEditingEmployeeId) return;
+
+    const input = document.getElementById("employeeSalaryInput");
+    const salary = Number(input.value);
+
+    if (!Number.isFinite(salary) || salary < 0) {
+        showToast("Please enter a valid salary amount.");
+        return;
+    }
+
+    const index = users.findIndex(user =>
+        String(user.employeeId) === String(salaryEditingEmployeeId)
+    );
+
+    if (index === -1) return;
+
+    users[index].salary = salary;
+
+    localStorage.setItem("dayflowUsers", JSON.stringify(users));
+
+    if (currentUser &&
+        String(currentUser.employeeId) === String(salaryEditingEmployeeId)) {
+        currentUser = users[index];
+        updatePayrollUI();
+    }
+
+    closeSalaryModal();
+    loadEmployees();
+    showToast("Employee salary updated successfully.");
+}
+
+
+/* =========================================================
+   HR EMPLOYEES
+
+function loadEmployees() {
+
+    const table =
+        document.getElementById(
+            "employeeTable"
+        );
+
+
+    if (!table) {
+        return;
+    }
+
+
+    const employees =
+        users.filter(
+            u =>
+                u.role === "employee"
+        );
+
+
+    table.innerHTML = `
+
+        <tr>
+
+            <th>
+                Employee ID
+            </th>
+
+            <th>
+                Employee
+            </th>
+
+            <th>
+                Email
+            </th>
+
+            <th>
+                Role
+            </th>
+
+            <th>
+                Monthly Salary
+            </th>
+
+            <th>
+                Status
+            </th>
+
+            <th>
+                Action
+            </th>
+
+        </tr>
+
+    `;
+
+
+    employees.forEach(
+        user => {
+
+            const row =
+                table.insertRow(-1);
+
+
+            const status =
+                user.status || "Active";
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${escapeHTML(
+                        user.employeeId
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        user.name
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        user.email
+                    )}
+                </td>
+
+                <td>
+                    Employee
+                </td>
+
+                <td>
+                    ₹${Number(user.salary || 0).toLocaleString("en-IN")}
+                </td>
+
+                <td>
+                    <span class="status ${status === "Active" ? "active" : "inactive"}">
+                        ${status}
+                    </span>
+                </td>
+
+                <td>
+                    <button class="btn btn-secondary" type="button"
+                        onclick="openSalaryModal('${String(user.employeeId).replace(/'/g, "\\'")}')">
+                        Set Salary
+                    </button>
+
+                    <button class="btn ${status === "Active" ? "btn-danger" : "btn-success"}" type="button"
+                        onclick="toggleEmployeeAccount('${String(user.employeeId).replace(/'/g, "\\'")}')">
+                        ${status === "Active" ? "Deactivate" : "Activate"}
+                    </button>
+                </td>
+
+            `;
+
+        }
+    );
+
+
+    setText(
+        "employeeCount",
+        employees.length
+    );
+
+    setText(
+        "adminLeaveCount",
+        leaveRequests.length
+    );
+
+}
+
+
+function toggleEmployeeAccount(employeeId) {
+
+    if (currentRole !== "admin") {
+
+        showToast(
+            "Only HR / Admin can change employee account status."
+        );
+
+        return;
+
+    }
+
+
+    const index =
+        users.findIndex(
+            user =>
+                String(user.employeeId) ===
+                String(employeeId)
+        );
+
+
+    if (index === -1) {
+        return;
+    }
+
+
+    users[index].status =
+        (users[index].status || "Active") === "Active"
+        ? "Inactive"
+        : "Active";
+
+
+    localStorage.setItem(
+        "dayflowUsers",
+        JSON.stringify(users)
+    );
+
+
+    loadEmployees();
+
+
+    showToast(
+        `${users[index].name}'s account is now ${users[index].status}.`
+    );
+
+}
+
+
+/* =========================================================
+   HR APPROVALS
+
+function loadApprovals() {
+
+    const table =
+        document.getElementById(
+            "approvalTable"
+        );
+
+
+    if (!table) {
+        return;
+    }
+
+
+    table.innerHTML = `
+
+        <tr>
+
+            <th>Employee</th>
+
+            <th>Leave Type</th>
+
+            <th>Date Range</th>
+
+            <th>Remarks</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+
+    `;
+
+
+    leaveRequests.forEach(
+        request => {
+
+            const row =
+                table.insertRow(-1);
+
+
+            let actions =
+                "Completed";
+
+
+            if (
+                request.status
+                ===
+                "Pending"
+            ) {
+
+                actions = `
+
+                    <button
+                        class="btn btn-success"
+                        onclick="approveLeave(${request.id})"
+                    >
+                        Approve
+                    </button>
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="rejectLeave(${request.id})"
+                    >
+                        Reject
+                    </button>
+
+                `;
+
+            }
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${escapeHTML(
+                        request.employeeName
+                    )}
+                </td>
+
+                <td>
+                    ${request.leaveType}
+                </td>
+
+                <td>
+                    ${request.startDate}
+                    -
+                    ${request.endDate}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        request.remarks || "-"
+                    )}
+                </td>
+
+                <td>
+
+                    <span
+                        class="status ${request.status.toLowerCase()}"
+                    >
+                        ${request.status}
+                    </span>
+
+                </td>
+
+                <td>
+                    ${actions}
+                </td>
+
+            `;
+
+        }
+    );
+
+}
+
+
+function approveLeave(id) {
+
+    const request =
+        leaveRequests.find(
+            r =>
+                r.id === id
+        );
+
+
+    if (!request) {
+        return;
+    }
+
+
+    request.status =
+        "Approved";
+
+
+    localStorage.setItem(
+        "dayflowLeaves",
+        JSON.stringify(
+            leaveRequests
+        )
+    );
+
+
+    loadApprovals();
+
+    updateReports();
+
+    showToast(
+        "Leave approved."
+    );
+
+}
+
+
+function rejectLeave(id) {
+
+    const request =
+        leaveRequests.find(
+            r =>
+                r.id === id
+        );
+
+
+    if (!request) {
+        return;
+    }
+
+
+    request.status =
+        "Rejected";
+
+
+    localStorage.setItem(
+        "dayflowLeaves",
+        JSON.stringify(
+            leaveRequests
+        )
+    );
+
+
+    loadApprovals();
+
+    updateReports();
+
+    showToast(
+        "Leave rejected."
+    );
+
+}
+
+
+/* =========================================================
+   REPORTS
+
+function updateReports() {
+
+    setText(
+        "reportEmployees",
+        users.filter(
+            u =>
+                u.role === "employee"
+        ).length
+    );
+
+
+    setText(
+        "reportLeaves",
+        leaveRequests.length
+    );
+
+
+    let totalDocuments = 0;
+
+
+    Object.values(
+        documentsData
+    ).forEach(
+        list => {
+
+            totalDocuments +=
+                list.length;
+
+        }
+    );
+
+
+    setText(
+        "reportDocuments",
+        totalDocuments
+    );
+
+}
+
+
+/* =========================================================
+   HR COPILOT
+
+function handleCopilotKey(event) {
+
+    if (
+        event.key === "Enter"
+    ) {
+
+        sendCopilotMessage();
+
+    }
+
+}
+
+
+function sendCopilotMessage() {
+
+    const input =
+        document.getElementById(
+            "copilotInput"
+        );
+
+
+    const question =
+        input.value.trim();
+
+
+    if (!question) {
+        return;
+    }
+
+
+    addChatMessage(
+        question,
+        "user"
+    );
+
+
+    input.value = "";
+
+
+    setTimeout(
+        function() {
+
+            const answer =
+                getCopilotAnswer(
+                    question
+                );
+
+
+            addChatMessage(
+                answer,
+                "bot"
+            );
+
+        },
+        400
+    );
+
+}
+
+
+function askCopilot(question) {
+
+    addChatMessage(
+        question,
+        "user"
+    );
+
+
+    setTimeout(
+        function() {
+
+            addChatMessage(
+                getCopilotAnswer(
+                    question
+                ),
+                "bot"
+            );
+
+        },
+        300
+    );
+
+}
+
+
+function addChatMessage(
+    message,
+    type
+) {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        "message " + type;
+
+
+    div.innerHTML =
+        escapeHTML(
+            message
+        ).replace(
+            /\n/g,
+            "<br>"
+        );
+
+
+    container.appendChild(
+        div
+    );
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+function getCopilotAnswer(question) {
+
+    const q =
+        question.toLowerCase();
+
+
+    if (
+        q.includes("leave")
+        ||
+        q.includes("vacation")
+        ||
+        q.includes("holiday")
+    ) {
+
+        return `
+You can apply for leave from the
+"Leave Requests" section.
+
+Choose the leave type, start date,
+end date and enter your reason.
+
+After submission, your request will
+remain Pending until HR reviews it.
+        `;
+
+    }
+
+
+    if (
+        q.includes("attendance")
+        ||
+        q.includes("check in")
+        ||
+        q.includes("check-in")
+        ||
+        q.includes("check out")
+    ) {
+
+        return `
+Go to the Attendance section or Dashboard.
+
+Click "Check In" when you start work.
+Click "Check Out" when you finish.
+
+Your working hours and weekly attendance
+graph are updated automatically.
+        `;
+
+    }
+
+
+    if (
+        q.includes("document")
+        ||
+        q.includes("upload")
+    ) {
+
+        return `
+Open the Documents section.
+
+Click the Upload Document area and select
+your PDF, DOC, DOCX, JPG or PNG file.
+
+After uploading, you can download or
+delete the document from the document list.
+        `;
+
+    }
+
+
+    if (
+        q.includes("profile")
+        ||
+        q.includes("photo")
+    ) {
+
+        return `
+Open your Profile.
+
+Click "Change Photo" and select an image
+from your computer.
+
+Your profile picture will also appear
+in the top-right account area.
+        `;
+
+    }
+
+
+    if (
+        q.includes("payroll")
+        ||
+        q.includes("salary")
+        ||
+        q.includes("payslip")
+    ) {
+
+        return `
+You can open the Payroll section to view
+your payroll information.
+
+Salary information is managed by HR.
+        `;
+
+    }
+
+
+    if (
+        q.includes("approve")
+        ||
+        q.includes("approval")
+    ) {
+
+        if (
+            currentRole === "admin"
+        ) {
+
+            return `
+As HR/Admin, open Leave Approvals.
+
+You can review Pending requests and
+choose Approve or Reject.
+            `;
+
+        }
+
+
+        return `
+Leave requests are reviewed by HR/Admin.
+You can monitor the status from the
+Leave Requests section.
+        `;
+
+    }
+
+
+    if (
+        q.includes("employee")
+        ||
+        q.includes("hr")
+    ) {
+
+        return `
+Dayflow provides HR features for employee
+management, attendance, leave management,
+documents and payroll visibility.
+
+Use the HR sections available in your
+account to manage these activities.
+        `;
+
+    }
+
+
+    return `
+I can help with common Dayflow HR questions.
+
+Try asking me about:
+
+• Attendance
+• Leave applications
+• Leave approval
+• Payroll
+• Documents
+• Profile photo
+• Employee management
+
+What would you like to know?
+    `;
+
+}
+
+
+/* =========================================================
+   LOGOUT
+
+function logout() {
+
+    currentUser = null;
+
+    currentRole = null;
+
+
+    document.getElementById(
+        "app"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "loginPage"
+    ).style.display =
+        "flex";
+
+
+    document.getElementById(
+        "loginEmail"
+    ).value = "";
+
+
+    document.getElementById(
+        "loginPassword"
+    ).value = "";
+
+
+    showLogin();
+
+}
+
+
+/* =========================================================
+   WINDOW EVENTS
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        if (currentUser) {
+
+            drawAttendanceGraphs();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        const leaveModal =
+            document.getElementById(
+                "leaveModal"
+            );
+
+        const jobModal =
+            document.getElementById(
+                "jobDetailsModal"
+            );
+
+
+        if (event.target === leaveModal) {
+            closeLeaveModal();
+        }
+
+
+        if (event.target === jobModal) {
+            closeJobDetailsModal();
+        }
+
+        const salaryModal = document.getElementById("salaryModal");
+        if (event.target === salaryModal) {
+            closeSalaryModal();
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIAL STATE
+
+document.getElementById(
+    "adminMenu"
+).style.display = "none";
+
+</script>
+
+</body>
+
+</html>
     )

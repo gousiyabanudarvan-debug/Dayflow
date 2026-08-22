@@ -1,31 +1,40 @@
-⚡ Dayflow HRMS
+# Day flow
+Human Resource Management System 
 
-Every workday, perfectly aligned.
+Day flow is an intelligent, full-stack Human Resource Management System (HRMS) designed to streamline daily workforce operations for both employees and HR administrators. Moving beyond traditional HR record-keeping, Dayflow introduces Dayflow Intelligence—an explainable decision-support engine that analyzes organizational data, detects meaningful work patterns, and provides actionable recommendations to HR leaders while keeping final operational decisions strictly in human hands.
 
-Dayflow is a lightweight, single-file Human Resource Management System (HRMS) built entirely with vanilla HTML, CSS, and JavaScript — no build tools, no backend, no dependencies. It runs directly in the browser and demonstrates a full HR workflow: authentication, attendance, leave management, payroll, employee wellbeing tracking, analytics, and an AI-style HR chat assistant.
+# Dayflow HRMS
 
 Dayflow HRMS is a simple web-based Human Resource Management System.
 
-Features
-Employee and HR/Admin account creation
-Login and logout
-Employee profile management
-Attendance tracking
-Leave requests and approvals
-Payroll and salary management
-Document upload and management
-Employee management
-Account activation and deactivation
-HR Copilot
-Technologies Used
-HTML
-CSS
-JavaScript
-LocalStorage
-How to Run
-Download or clone the project.
-Open index.html in a web browser.
-GitHub Pages
+## Features
+
+- Employee and HR/Admin account creation
+- Login and logout
+- Employee profile management
+- Attendance tracking
+- Leave requests and approvals
+- Payroll and salary management
+- Document upload and management
+- Employee management
+- Account activation and deactivation
+- HR Copilot
+
+## Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+- LocalStorage
+
+## How to Run
+
+1. Download or clone the project.
+2. Open `index.html` in a web browser.
+
+## GitHub Pages
+
 Upload the project to GitHub and enable GitHub Pages to run the application online.
 
-Note: User data is stored in the browser using LocalStorage.
+> Note: User data is stored in the browser using LocalStorage.
+
