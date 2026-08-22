@@ -6,7 +6,7 @@ Dayflow is a lightweight, single-file Human Resource Management System (HRMS) bu
 
 Dayflow HRMS is a simple web-based Human Resource Management System.
 
-Features
+Features:
 Employee and HR/Admin account creation
 
 Login and logout
@@ -28,7 +28,7 @@ Account activation and deactivation
 HR Copilot
 
 
-Technologies Used
+Technologies Used:
 HTML
 
 CSS
@@ -38,7 +38,7 @@ JavaScript
 LocalStorage
 
 
-How to Run
+How to Run:
 Download or clone the project.
 
 Open index.html in a web browser.
